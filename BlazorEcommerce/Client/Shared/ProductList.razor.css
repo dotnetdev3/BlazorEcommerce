@@ -9,6 +9,14 @@
     .media-img:hover {
         transform: scale(1.2, 1.2)
     }
+.media{
+    display: flex;
+    align-items:flex-start;
+}
+
+.meddia-body{
+    flex:1;
+}
 
 .media-img-wrapper {
     width: 200px;
