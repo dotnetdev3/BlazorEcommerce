@@ -1,5 +1,6 @@
 ﻿using BlazorEcommerce.Shared;
 using System.Net.Http.Json;
+using System.Text.RegularExpressions;
 
 namespace BlazorEcommerce.Client.Services.ProductService
 {
@@ -12,6 +13,12 @@ namespace BlazorEcommerce.Client.Services.ProductService
             _http = http;
         }
         public List<Product> Products { get ; set; } = new List<Product>();
+
+        public async Task<ServiceResponse<Product>> GetProduct(int productId)
+        {
+            var result = await _http.GetFromJsonAsync<ServiceResponse<Product>>($"api/product/{productId}");
+            return result;
+        }
 
         public async Task GetProducts()
         {

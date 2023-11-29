@@ -5,17 +5,22 @@
     margin: 0 10px 10px 10px;
 }
 
-.media-img-wrapper{
+.media-img-wrapper {
     max-width: 500px;
     max-height: 500px;
     text-align: center;
 }
 
-@media (max-width: 1023.98px){
-    .media-img{
-        max-width: 500px;
+@media (max-width: 1023.98px) {
+
+    .media {
+        flex-direction: column;
     }
-    .media-img-wrapper{
+
+    .media-img { 
+        max-width: 300px;
+    }
+    .media-img-wrapper {
         width: 100%;
         height: auto;
     }
