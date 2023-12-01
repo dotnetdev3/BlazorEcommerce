@@ -17,7 +17,7 @@ namespace BlazorEcommerce.Server.Services.CategoryService
             return new ServiceResponse<List<Category>>
             {
                 Data = categories
-            }
+            };
         }
     }
 }

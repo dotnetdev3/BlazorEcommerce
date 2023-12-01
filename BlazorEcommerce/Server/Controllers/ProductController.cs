@@ -1,5 +1,5 @@
 ﻿using BlazorEcommerce.Server.Data;
-using BlazorEcommerce.Server.Service;
+using BlazorEcommerce.Server.Services.ProductService;
 using BlazorEcommerce.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
