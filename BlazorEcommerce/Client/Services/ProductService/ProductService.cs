@@ -2,7 +2,7 @@
 using System.Net.Http.Json;
 using System.Text.RegularExpressions;
 
-namespace BlazorEcommerce.Client.Services.ProductService
+namespace BlazorEcommerce.Client.Services.ProductServices
 {
     public class ProductService: IProductService
     {

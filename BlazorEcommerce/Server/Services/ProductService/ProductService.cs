@@ -1,7 +1,7 @@
 ﻿using BlazorEcommerce.Server.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace BlazorEcommerce.Server.Service
+namespace BlazorEcommerce.Server.Services.ProductService
 {
     public class ProductService : IProductService
     {

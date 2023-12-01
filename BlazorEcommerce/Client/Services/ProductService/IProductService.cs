@@ -1,6 +1,6 @@
 ﻿using BlazorEcommerce.Shared;
 
-namespace BlazorEcommerce.Client.Services.ProductService
+namespace BlazorEcommerce.Client.Services.ProductServices
 {
     public interface IProductService
     {
