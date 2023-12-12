@@ -62,7 +62,8 @@ namespace BlazorEcommerce.Server.Data
                     Title = "The Wise Man's Fear",
                     Description = "The Wise Man's Fear is a fantasy novel written by American author Patrick Rothfuss and the second volume in The Kingkiller Chronicle. It was published on March 1, 2011, by DAW Books.[3] It is the sequel to 2007's The Name of the Wind.",
                     ImageUrl = "https://upload.wikimedia.org/wikipedia/en/7/7b/The_Wise_Man%27s_Fear.jpg",
-                    CategoryId = 1
+                    CategoryId = 1,
+                    Featured = true
                 },
                 new Product
                 {
@@ -79,7 +80,8 @@ namespace BlazorEcommerce.Server.Data
                         Title = "The Matrix",
                         Description = "The Matrix is a 1999 science fiction action film written and directed by the Wachowskis, and produced by Joel Silver. Starring Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss, Hugo Weaving, and Joe Pantoliano, and as the first installment in the Matrix franchise, it depicts a dystopian future in which humanity is unknowingly trapped inside a simulated reality, the Matrix, which intelligent machines have created to distract humans while using their bodies as an energy source. When computer programmer Thomas Anderson, under the hacker alias \"Neo\", uncovers the truth, he \"is drawn into a rebellion against the machines\" along with other people who have been freed from the Matrix.",
                         ImageUrl = "https://upload.wikimedia.org/wikipedia/en/c/c1/The_Matrix_Poster.jpg",
-                    },
+                        Featured = true
+                },
                 new Product
                     {
                         Id = 5,
@@ -129,7 +131,8 @@ namespace BlazorEcommerce.Server.Data
                         Title = "Xbox",
                         Description = "The Xbox is a home video game console and the first installment in the Xbox series of video game consoles manufactured by Microsoft.",
                         ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/43/Xbox-console.jpg",
-                    },
+                        Featured = true
+                },
                 new Product
                     {
                         Id = 11,
