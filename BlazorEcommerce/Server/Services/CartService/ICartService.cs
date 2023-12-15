@@ -2,7 +2,6 @@
 {
     public interface ICartService
     {
-        event Action OnChanged;
-        Task AddCartItem(CartItem cartItem);
+       Task<ServiceResponse<List<CartProductRespose>>> GetCartProducts(List<CartItem> cartItems);
     }
 }
