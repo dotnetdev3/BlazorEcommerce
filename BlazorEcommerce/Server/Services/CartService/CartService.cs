@@ -28,7 +28,7 @@ namespace BlazorEcommerce.Server.Services.CartService
                     continue;
                 }
                 
-                var productVariant = await _context.ProductVariant
+                var productVariant = await _context.ProductVariants
                     .Where(v => v.ProductId == item.ProductId
                     && v.ProductTypeId == item.ProductTypeId)
                     .Include(v => v.ProductType)
