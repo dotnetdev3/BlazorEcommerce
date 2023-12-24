@@ -9,11 +9,11 @@ namespace BlazorEcommerce.Server.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthService _autService;
+        private readonly IAuthService _authService;
 
-        public AuthController(IAuthService autService) 
+        public AuthController(IAuthService authService) 
         {
-            _autService = autService;
+            _authService = authService;
         }
 
         [HttpPost("register")]
@@ -26,6 +26,18 @@ namespace BlazorEcommerce.Server.Controllers
                 },
                 request.Password);
 
+            if(!response.Success)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<ServiceResponse<string>>> Login(UserLogin request)
+        {
+            var response = await _authService.Login(request.Email, request.Password);
             if(!response.Success)
             {
                 return BadRequest(response);
