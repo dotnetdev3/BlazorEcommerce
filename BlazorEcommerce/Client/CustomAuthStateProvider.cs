@@ -28,13 +28,13 @@ namespace BlazorEcommerce.Client
             var identity = new ClaimsIdentity(authToken);
             _http.DefaultRequestHeaders.Authorization = null;
 
-            if(!string.IsNullOrEmpty(authToken) )
+            if (!string.IsNullOrEmpty(authToken))
             {
                 try
                 {
                     identity = new ClaimsIdentity(ParseClaimsFromJwt(authToken), "jwt");
                     _http.DefaultRequestHeaders.Authorization =
-                        new AuthenticationHeaderValue("Baerer", authToken.Replace("\"",""));
+                        new AuthenticationHeaderValue("Bearer", authToken.Replace("\"",""));
                 }
                 catch
                 {
