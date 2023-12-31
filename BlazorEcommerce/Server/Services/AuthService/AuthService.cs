@@ -124,12 +124,12 @@ namespace BlazorEcommerce.Server.Services.AuthService
             var user = await _context.Users.FindAsync(userId);
             if (user == null)
             {
-                return new ServiceResponse<bool> 
-                { 
+                return new ServiceResponse<bool>
+                {
                     Success = false,
                     Message = "User not found."
                 };
-
+            }
                 CreatePasswordHash(newPassword, out byte[] passwordHash, out byte[] passwordSalt);
 
                 user.PasswordHash = passwordHash;
@@ -142,7 +142,6 @@ namespace BlazorEcommerce.Server.Services.AuthService
                     Data = true,
                     Message = "Password has been changed."
                 };
-            }
         }
     }
 }
