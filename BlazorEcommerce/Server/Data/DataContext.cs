@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using BlazorEcommerce.Shared;
 
 namespace BlazorEcommerce.Server.Data
 {

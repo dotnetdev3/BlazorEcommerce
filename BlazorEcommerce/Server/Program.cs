@@ -1,4 +1,3 @@
-global using BlazorEcommerce.Shared;
 using BlazorEcommerce.Server.Data;
 using BlazorEcommerce.Server.Services.CategoryService;
 using BlazorEcommerce.Server.Services.ProductService;
@@ -40,6 +39,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false,
         };
     });
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

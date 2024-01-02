@@ -1,5 +1,7 @@
 ﻿using BlazorEcommerce.Server.Services.CartService;
 using Microsoft.AspNetCore.Mvc;
+using BlazorEcommerce.Shared;
+
 
 namespace BlazorEcommerce.Server.Controllers
 {
@@ -21,5 +23,11 @@ namespace BlazorEcommerce.Server.Controllers
             return Ok(result);
         }
 
+        [HttpPost]
+        public async Task<ActionResult<ServiceResponse<List<CartProductRespose>>>> StoreCartItems(List<CartItem> cartItems)
+        {
+            var result = await _cartService.StoreCartItems(cartItems);
+            return Ok(result);
+        }
     }
 }

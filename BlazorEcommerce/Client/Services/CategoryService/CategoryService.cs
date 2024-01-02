@@ -16,7 +16,7 @@ namespace BlazorEcommerce.Client.Services.CategoryService
 
         public async Task GetCategories()
         {
-            var response = await _http.GetFromJsonAsync<ServiceResponse<List<Category>>>("api/Category");
+            var response = await _http.GetFromJsonAsync<ServiceResponse<List<Category>>>("api/category");
             if (response != null && response.Data != null)
             {
                 Categories = response.Data;

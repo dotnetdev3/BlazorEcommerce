@@ -3,6 +3,7 @@
 @inject ILocalStorageService LocalStorage
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ICartService CartService
 
 <PageTitle>Login</PageTitle>
 
@@ -35,11 +36,11 @@
 
     protected override void OnInitialized()
     {
-            var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
-            if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("returnUrl", out var url))
-            {
-                returnUrl = url;
-            }
+        var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("returnUrl", out var url))
+        {
+            returnUrl = url;
+        }
     }
 
     private async Task HandleLogin()
@@ -51,8 +52,8 @@
 
             await LocalStorage.SetItemAsync("authToken", result.Data);
             await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            await CartService.StoreCartItems(true);
             NavigationManager.NavigateTo(returnUrl);
-
         }
         else
         {

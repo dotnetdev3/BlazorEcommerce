@@ -1,16 +1,22 @@
 ﻿using BlazorEcommerce.Server.Data;
 using Microsoft.EntityFrameworkCore;
+using BlazorEcommerce.Shared;
+using System.Security.Claims;
 
 namespace BlazorEcommerce.Server.Services.CartService
 {
     public class CartService : ICartService
     {
         private readonly DataContext _context;
+        private readonly IHttpContextAccessor _httpContextAcessor;
 
-        public CartService(DataContext context)
+        public CartService(DataContext context, IHttpContextAccessor httpContextAcessor)
         {
             _context = context;
+            _httpContextAcessor = httpContextAcessor;
         }
+
+        private int GetUserId() => int.Parse(_httpContextAcessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
         public async Task<ServiceResponse<List<CartProductRespose>>> GetCartProducts(List<CartItem> cartItems)
         {
             var result = new ServiceResponse<List<CartProductRespose>>
@@ -53,6 +59,16 @@ namespace BlazorEcommerce.Server.Services.CartService
             }
 
             return result;
+        }
+
+        public async Task<ServiceResponse<List<CartProductRespose>>> StoreCartItems(List<CartItem> cartItems)
+        {
+            cartItems.ForEach(cartItem => cartItem.UserId = GetUserId());
+            _context.CartItems.AddRange(cartItems);
+            await _context.SaveChangesAsync();
+
+            return await GetCartProducts(await _context.CartItems
+                         .Where(ci => ci.UserId == GetUserId()).ToListAsync());
         }
     }
 }

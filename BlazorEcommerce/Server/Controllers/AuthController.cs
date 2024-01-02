@@ -2,6 +2,7 @@
 using BlazorEcommerce.Server.Services.AuthService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using BlazorEcommerce.Shared;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 

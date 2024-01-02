@@ -1,4 +1,5 @@
-﻿using BlazorEcommerce.Shared;
+﻿using BlazorEcommerce.Client.Pages;
+using BlazorEcommerce.Shared;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Net.Http.Json;
@@ -60,7 +61,6 @@ namespace BlazorEcommerce.Client.Services.CartService
             {
                 cart = new List<CartItem>();
             }
-
             return cart;
         }
 
@@ -88,6 +88,22 @@ namespace BlazorEcommerce.Client.Services.CartService
                 cart.Remove(cartItem);
                 await _localStorage.SetItemAsync("cart", cart);
                 OnChanged.Invoke();
+            }
+        }
+
+        public async Task StoreCartItems(bool emptyLocalCart = false)
+        {
+            var localCart = await _localStorage.GetItemAsync<List<CartItem>>("cart");
+            if (localCart == null)
+            {
+                return;
+            }
+
+            await _http.PostAsJsonAsync("api/cart", localCart);
+
+            if (emptyLocalCart)
+            {
+                await _localStorage.RemoveItemAsync("cart");
             }
         }
 

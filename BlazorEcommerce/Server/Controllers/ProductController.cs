@@ -1,8 +1,8 @@
-﻿using BlazorEcommerce.Server.Data;
+﻿using BlazorEcommerce.Shared;
 using BlazorEcommerce.Server.Services.ProductService;
-using BlazorEcommerce.Shared;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using BlazorEcommerce.Server.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlazorEcommerce.Server.Controllers
