@@ -6,5 +6,6 @@ namespace BlazorEcommerce.Server.Services.CartService
     {
        Task<ServiceResponse<List<CartProductRespose>>> GetCartProducts(List<CartItem> cartItems);
        Task<ServiceResponse<List<CartProductRespose>>> StoreCartItems(List<CartItem> cartItems);
+       Task<ServiceResponse<int>> GetCartItemsCount();
     }
 }
