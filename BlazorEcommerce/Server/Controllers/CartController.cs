@@ -35,5 +35,12 @@ namespace BlazorEcommerce.Server.Controllers
         {
             return await _cartService.GetCartItemsCount();
         }
+
+        [HttpGet]
+        public async Task<ActionResult<ServiceResponse<List<CartProductRespose>>>> GetDbCartProduct()
+        {
+            var result = await _cartService.GetDbCartProducts();
+            return Ok(result);
+        }
     }
 }

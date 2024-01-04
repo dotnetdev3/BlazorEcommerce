@@ -3,6 +3,7 @@ using BlazorEcommerce.Shared;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Net.Http.Json;
+using System.Net.WebSockets;
 
 namespace BlazorEcommerce.Client.Services.CartService
 {
@@ -24,7 +25,7 @@ namespace BlazorEcommerce.Client.Services.CartService
 
         public async Task AddToCart(CartItem cartItem)
         {
-            if((await _authenticationStateProvider.GetAuthenticationStateAsync()).User.Identity.IsAuthenticated)
+            if (await IsUserAuthenticated())
             {
                 Console.WriteLine("user is authenticated");
             }
@@ -34,14 +35,14 @@ namespace BlazorEcommerce.Client.Services.CartService
             }
 
             var cart = await _localStorage.GetItemAsync<List<CartItem>>("cart");
-            if (cart == null) 
+            if (cart == null)
             {
                 cart = new List<CartItem>();
             }
 
-            var sameItem = cart.Find(x => x.ProductId == cartItem.ProductId 
+            var sameItem = cart.Find(x => x.ProductId == cartItem.ProductId
             && x.ProductTypeId == cartItem.ProductTypeId);
-            if (sameItem == null) 
+            if (sameItem == null)
             {
                 cart.Add(cartItem);
             }
@@ -51,26 +52,45 @@ namespace BlazorEcommerce.Client.Services.CartService
             }
 
             await _localStorage.SetItemAsync("cart", cart);
-            OnChanged.Invoke();
+            await GetCartItemsCount();
         }
 
-        public async Task<List<CartItem>> GetCartItems()
+        public async Task GetCartItemsCount()
         {
-            var cart = await _localStorage.GetItemAsync<List<CartItem>>("cart");
-            if (cart == null)
+            if (await IsUserAuthenticated())
             {
-                cart = new List<CartItem>();
+                var result = await _http.GetFromJsonAsync<ServiceResponse<int>>("api/cart/count");
+                var count = result.Data;
+
+                await _localStorage.SetItemAsync<int>("cartItemsCount", count);
             }
-            return cart;
+            else
+            {
+                var cart = await _localStorage.GetItemAsync<List<CartItem>>("cart");
+
+                await _localStorage.SetItemAsync<int>("cartItemsCount", cart != null ? cart.Count : 0);
+            }
+
+            OnChanged.Invoke();
         }
 
         public async Task<List<CartProductRespose>> GetCartProducts()
         {
-            var cartItems = await _localStorage.GetItemAsync<List<CartItem>>("cart");
-            var response = await _http.PostAsJsonAsync("api/cart/products", cartItems);
-            var cartProducts =
-                await response.Content.ReadFromJsonAsync<ServiceResponse<List<CartProductRespose>>>();
-            return cartProducts.Data;
+            if(await IsUserAuthenticated())
+            {
+                var response = await _http.GetFromJsonAsync<ServiceResponse<List<CartProductRespose>>>("api/cart");
+                return response.Data;
+            }
+            else
+            {
+                var cartItems = await _localStorage.GetItemAsync<List<CartItem>>("cart");
+                if (cartItems == null)
+                    return new List<CartProductRespose>();
+                var response = await _http.PostAsJsonAsync("api/cart/products", cartItems);
+                var cartProducts =
+                    await response.Content.ReadFromJsonAsync<ServiceResponse<List<CartProductRespose>>>();
+                return cartProducts.Data;
+            }  
         }
 
         public async Task RemoveProductFromCart(int productId, int productTypeId)
@@ -87,7 +107,7 @@ namespace BlazorEcommerce.Client.Services.CartService
             {
                 cart.Remove(cartItem);
                 await _localStorage.SetItemAsync("cart", cart);
-                OnChanged.Invoke();
+                await GetCartItemsCount();
             }
         }
 
@@ -122,6 +142,11 @@ namespace BlazorEcommerce.Client.Services.CartService
                 cartItem.Quantity = product.Quantity;
                 await _localStorage.SetItemAsync("cart", cart);
             }
+        }
+
+        private async Task<bool> IsUserAuthenticated()
+        {
+            return (await _authenticationStateProvider.GetAuthenticationStateAsync()).User.Identity.IsAuthenticated;
         }
     }
 }
