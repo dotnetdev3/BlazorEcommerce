@@ -1,4 +1,4 @@
-﻿using BlazorEcommerce.Client.Services.CartService;
+﻿ using BlazorEcommerce.Server.Services.CartService;
 using BlazorEcommerce.Server.Data;
 using BlazorEcommerce.Server.Migrations;
 using BlazorEcommerce.Shared;
@@ -23,9 +23,33 @@ namespace BlazorEcommerce.Server.Services.OrderService
 
         private int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-        public Task<ServiceResponse<bool>> PlaceOrder()
+        public async Task<ServiceResponse<bool>> PlaceOrder()
         {
-            throw new NotImplementedException();
+            var products = (await _cartService.GetDbCartProducts()).Data;
+            decimal totalPrice = 0;
+            products.ForEach(product => totalPrice += product.Price + product.Quantity);
+
+            var orderItems = new List<OrderItem>();
+            products.ForEach(product => orderItems.Add(new OrderItem
+            {
+                ProductId = product.ProductId,
+                ProductTypeId = product.ProductTypeId,
+                Quantity = product.Quantity,
+                TotalPrice = product.Price * product.Quantity
+            }));
+
+            var order = new Order
+            {
+                UserId = GetUserId(),
+                OrderDate = DateTime.Now,
+                TotalPrice = totalPrice,
+                OrderItems = orderItems
+            };
+
+            _context.Orders.Add(order);
+            await _context.SaveChangesAsync();
+
+            return new ServiceResponse<bool> { Data = true };
         }
     }
 }
