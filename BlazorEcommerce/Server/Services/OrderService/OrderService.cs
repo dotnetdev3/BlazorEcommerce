@@ -4,6 +4,7 @@ using BlazorEcommerce.Server.Migrations;
 using BlazorEcommerce.Shared;
 using System.Security.Claims;
 using BlazorEcommerce.Server.Services.AuthService;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlazorEcommerce.Server.Services.OrderService
 {
@@ -20,6 +21,33 @@ namespace BlazorEcommerce.Server.Services.OrderService
             _context = context;
             _cartService = cartService;
             _authService = authService;
+        }
+
+        public async Task<ServiceResponse<List<OrderOverviewResponse>>> GetOrders()
+        {
+            var response = new ServiceResponse<List<OrderOverviewResponse>>();
+            var orders = await _context.Orders
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                .Where(o => o.UserId == _authService.GetUserId())
+                .OrderByDescending(o => o.OrderDate)
+                .ToListAsync();
+
+            var orderResponse = new List<OrderOverviewResponse>();
+            orders.ForEach(o => orderResponse.Add(new OrderOverviewResponse
+            {
+                Id = o.Id,
+                OrderDate = o.OrderDate,
+                TotalPrice = o.TotalPrice,
+                Product = o.OrderItems.Count > 1 ?
+                    $"{o.OrderItems.First().Product.Title } and + " +
+                    $" {o.OrderItems.Count - 1} more..." :
+                    o.OrderItems.First().Product.Title,
+                ProductImageUrl = o.OrderItems.First().Product.ImageUrl,
+            }));
+            
+            response.Data = orderResponse;
+            return response;
         }
 
         public async Task<ServiceResponse<bool>> PlaceOrder()
