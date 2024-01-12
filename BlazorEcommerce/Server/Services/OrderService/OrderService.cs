@@ -74,11 +74,11 @@ namespace BlazorEcommerce.Server.Services.OrderService
             {
                 OrderDate = order.OrderDate,
                 TotalPrice = order.TotalPrice,
-                Product = new List<OrderDetailsProductResponse>()
+                Products = new List<OrderDetailsProductResponse>()
             };
 
             order.OrderItems.ForEach(item =>
-            orderDetailsResponse.Product.Add(new OrderDetailsProductResponse
+            orderDetailsResponse.Products.Add(new OrderDetailsProductResponse
             {
                 ProductId = item.ProductId,
                 ImageUrl = item.Product.ImageUrl,
