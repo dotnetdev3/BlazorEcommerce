@@ -3,7 +3,6 @@ using BlazorEcommerce.Server.Services.CartService;
 using BlazorEcommerce.Server.Services.OrderService;
 using Stripe;
 using Stripe.Checkout;
-using static System.Net.WebRequestMethods;
 
 namespace BlazorEcommerce.Server.Services.PaymentService
 {

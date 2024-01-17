@@ -20,7 +20,7 @@ namespace BlazorEcommerce.Server.Controllers
         public async Task<ActionResult<string>> CreateCheckoutSession()
         {
             var session = await _paymentService.CreateCheckoutSession();
-            return Ok(session);
+            return Ok(session.Url);
         }
     }
 }

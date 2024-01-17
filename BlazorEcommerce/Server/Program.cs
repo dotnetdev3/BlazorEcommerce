@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using BlazorEcommerce.Server.Services.OrderService;
-using BlazorEcommerce.Client.Services.PaymentService;
+using BlazorEcommerce.Server.Services.PaymentService;
 
 var builder = WebApplication.CreateBuilder(args);
 
