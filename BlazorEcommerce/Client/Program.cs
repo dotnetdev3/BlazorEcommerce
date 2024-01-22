@@ -2,13 +2,13 @@ using BlazorEcommerce.Client;
 using BlazorEcommerce.Client.Services.CategoryService;
 using BlazorEcommerce.Client.Services.ProductServices;
 using BlazorEcommerce.Client.Services.CartService;
+using BlazorEcommerce.Client.Services.OrderService;
+using BlazorEcommerce.Client.Services.AddressService;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using BlazorEcommerce.Client.Services.AuthService;
 using Microsoft.AspNetCore.Components.Authorization;
-using BlazorEcommerce.Client.Services.OrderService;
-using BlazorEcommerce.Client.Services.AddressService;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
