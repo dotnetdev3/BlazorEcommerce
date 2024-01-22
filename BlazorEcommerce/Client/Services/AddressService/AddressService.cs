@@ -13,7 +13,7 @@ namespace BlazorEcommerce.Client.Services.AddressService
         }
         public async Task<Address> AddOrUpdateAddress(Address address)
         {
-            var response = await _http.PostAsJsonAsync("api/addrress", address);
+            var response = await _http.PostAsJsonAsync("api/address", address);
             return response.Content
                 .ReadFromJsonAsync<ServiceResponse<Address>>().Result.Data;
         }

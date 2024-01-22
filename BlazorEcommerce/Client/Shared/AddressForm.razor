@@ -9,11 +9,12 @@
 else if(!editAddress)
 {
     <p>
-        <span>@address.FirstName @address.LastName</span>
-        <span>@address.Street</span>
-        <span>@address.City. @address.State, @address.Zip</span>
-        <span>@address.Country</span>
+        <span>@address.FirstName @address.LastName</span><br />
+        <span>@address.Street</span><br />
+        <span>@address.City. @address.State, @address.Zip</span><br />
+        <span>@address.Country</span><br />
     </p>
+    <button class="btn btn-primary" @onclick="EditAddress">Edit</button>
 }
 else
 {
@@ -46,7 +47,7 @@ else
             <label for="country">Country</label>
             <InputText id="country" @bind-Value="address.Country" class="form-control"></InputText>
         </div>
-        <button type="submit" class="btn btn_primary">Save</button>
+        <button type="submit" class="btn btn-primary">Save</button>
     </EditForm>
 }
 
